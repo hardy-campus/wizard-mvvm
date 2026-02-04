@@ -20,53 +20,53 @@ import eu.selfhost.campus.ui.api.IValidatable;
 
 public class WizardPage extends Panel {
 
-    protected static Consumer<String> convertBoolean(Consumer<Boolean> booleanConsumer) {
+    public static Consumer<String> convertBoolean(Consumer<Boolean> booleanConsumer) {
         return (input) -> {
             booleanConsumer.accept(input != null && input.equalsIgnoreCase("true"));
         };
     }
 
-    protected static Supplier<String> convertBoolean(Supplier<Boolean> booleanSupplier) {
+    public static Supplier<String> convertBoolean(Supplier<Boolean> booleanSupplier) {
         return () -> {
             Boolean value = booleanSupplier.get();
             return value != null && value ? "true" : "false";
         };
     }
 
-    protected static <E extends Enum<E>> Consumer<String> convertEnum(Class<E> clazz,
+    public static <E extends Enum<E>> Consumer<String> convertEnum(Class<E> clazz,
             Consumer<E> enumConsumer) {
         return (input) -> {
             enumConsumer.accept(input == null ? null : toEnum(clazz, input));
         };
     }
 
-    protected static <E extends Enum<E>> Supplier<String> convertEnum(Supplier<E> enumSupplier) {
+    public static <E extends Enum<E>> Supplier<String> convertEnum(Supplier<E> enumSupplier) {
         return () -> {
             E _enum = enumSupplier.get();
             return _enum == null ? "" : _enum.toString();
         };
     }
 
-    protected static Consumer<String> convertFile(Consumer<File> fileConsumer) {
+    public static Consumer<String> convertFile(Consumer<File> fileConsumer) {
         return (input) -> {
-            fileConsumer.accept(input == null ? null : new File(input));
+            fileConsumer.accept(input == null || input.isEmpty() ? null : new File(input));
         };
     }
 
-    protected static Supplier<String> convertFile(Supplier<File> fileSupplier) {
+    public static Supplier<String> convertFile(Supplier<File> fileSupplier) {
         return () -> {
             File file = fileSupplier.get();
-            return file == null ? null : file.getAbsolutePath();
+            return file == null ? null : file.toString();
         };
     }
 
-    protected static Consumer<String> convertInt(Consumer<Integer> intConsumer) {
+    public static Consumer<String> convertInt(Consumer<Integer> intConsumer) {
         return (input) -> {
             intConsumer.accept(input == null || input.isEmpty() ? 0 : Integer.parseInt(input));
         };
     }
 
-    protected static Supplier<String> convertInt(Supplier<Integer> intSupplier) {
+    public static Supplier<String> convertInt(Supplier<Integer> intSupplier) {
         return () -> {
             Integer value = intSupplier.get();
             return value == null ? null : "" + value;

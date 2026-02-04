@@ -70,8 +70,8 @@ public class LCheckBox extends CheckBox implements IModifyable {
     }
 
     @Override
-    public void setGetter(Supplier<String> detter) {
-        this.getter = detter;
+    public void setGetter(Supplier<String> getter) {
+        this.getter = getter;
     }
 
     @Override

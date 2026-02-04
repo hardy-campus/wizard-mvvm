@@ -1,5 +1,6 @@
 package eu.selfhost.campus.ui.container;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
@@ -53,12 +54,23 @@ public class WizardWindow extends BasicWindow {
                 if (keyStroke.getKeyType() == KeyType.Escape) {
                     cancelled.set(true);
                     basePane.close();
+                    hasBeenHandled.set(true);
                 }
                 super.onUnhandledInput(basePane, keyStroke, hasBeenHandled);
             }
         });
+
+        wizardContentPanel.setOnNewPage(this::onNewPage);
+
         wizardContentPanel.start();
+
+        setHints(Arrays.asList(Window.Hint.EXPANDED));
+
         setTitle(pages[0].getTitle());
+    }
+
+    protected void onNewPage(WizardPage page) {
+        setTitle(page.getTitle());
     }
 
     public boolean isCancelled() {
@@ -66,9 +78,13 @@ public class WizardWindow extends BasicWindow {
     }
 
     public void setOnNewPage(Consumer<WizardPage> onNewPage) {
-        wizardContentPanel.setOnNewPage(page -> {
-            onNewPage.accept(page);
-            WizardWindow.this.setTitle(page.getTitle());
-        });
+        if (onNewPage == null) {
+            wizardContentPanel.setOnNewPage(this::onNewPage);
+        } else {
+            wizardContentPanel.setOnNewPage(page -> {
+                onNewPage.accept(page);
+                WizardWindow.this.onNewPage(page);
+            });
+        }
     }
 }

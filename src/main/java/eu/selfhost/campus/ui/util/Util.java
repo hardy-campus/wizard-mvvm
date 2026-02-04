@@ -92,18 +92,19 @@ public class Util {
      */
     public static void setupTerminal(TerminalScreen screen, final BasicWindow window)
             throws IOException {
+        setupTerminal(screen, window, null);
+    }
+
+    public static void setupTerminal(TerminalScreen screen, BasicWindow window, String title)
+            throws IOException {
         @SuppressWarnings("resource")
         Terminal terminal = screen.getTerminal();
-        window.setFixedSize(screen.getTerminalSize().withRelative(-5, -5));
-        terminal.addResizeListener((_terminal, newSize) -> {
-            window.setFixedSize(screen.getTerminalSize().withRelative(-5, -5));
-        });
         if (terminal instanceof SwingTerminal) {
             SwingTerminal swing = (SwingTerminal) terminal;
             swing.setFont(Font.getFont("Lucida Console"));
         }
         if (terminal instanceof ExtendedTerminal) {
-            ((ExtendedTerminal) terminal).setTitle("Example Wizard");
+            ((ExtendedTerminal) terminal).setTitle(title);
         }
     }
 
@@ -130,5 +131,4 @@ public class Util {
         screen.startScreen();
         return screen;
     }
-
 }

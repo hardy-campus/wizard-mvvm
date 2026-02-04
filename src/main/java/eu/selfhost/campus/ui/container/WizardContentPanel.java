@@ -17,6 +17,7 @@ import com.googlecode.lanterna.gui2.LinearLayout;
 import com.googlecode.lanterna.gui2.LinearLayout.Alignment;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.Separator;
+import com.googlecode.lanterna.input.KeyStroke;
 
 public class WizardContentPanel extends Panel {
 
@@ -112,6 +113,36 @@ public class WizardContentPanel extends Panel {
         cancel.addListener(this::cancel);
     }
 
+    @SuppressWarnings("incomplete-switch")
+    @Override
+    public boolean handleInput(KeyStroke keyStroke) {
+        if (keyStroke.isAltDown()) {
+            switch (keyStroke.getCharacter()) {
+                case 'F':
+                case 'f':
+                    if (page == pages.length - 1) {
+                        next(next);
+                    }
+                    break;
+                case 'N':
+                case 'n':
+                    if (page < pages.length - 1) {
+                        next(next);
+                    }
+                    break;
+                case 'P':
+                case 'p':
+                    prev(prev);
+                    break;
+                case 'C':
+                case 'c':
+                    cancel(cancel);
+                    break;
+            }
+        }
+        return super.handleInput(keyStroke);
+    }
+
     private void cancel(Button button1) {
         closeWindow(true);
     }
@@ -178,6 +209,8 @@ public class WizardContentPanel extends Panel {
 
         newPage.initialFocus();
         newPage.refresh();
+
+        next.setLabel(page == pages.length - 1 ? "Finish" : "Next");
 
         header.setText(newPage.getDescription());
         if (onNewPage != null) {

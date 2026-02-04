@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import eu.selfhost.campus.ui.api.Wizards;
 import eu.selfhost.campus.ui.example.Example;
+import eu.selfhost.campus.ui.example.Example2;
+import eu.selfhost.campus.ui.example.Example2Page;
 import eu.selfhost.campus.ui.example.ExamplePage;
 
 public class WizardTester {
@@ -32,6 +34,9 @@ public class WizardTester {
         Example example = new Example();
         ExamplePage examplePage = new ExamplePage(example);
 
-        return Wizards.runUI(example, "Example", examplePage);
+        Example2 example2 = new Example2();
+        Example2Page example2Page = new Example2Page(example2);
+
+        return Wizards.runUI(example, "Example", examplePage, example2Page);
     }
 }

@@ -33,7 +33,7 @@ public class LLabel extends Label implements IRefreshable {
     }
 
     @Override
-    public void setGetter(Supplier<String> detter) {
-        this.getter = detter;
+    public void setGetter(Supplier<String> getter) {
+        this.getter = getter;
     }
 }

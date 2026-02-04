@@ -7,13 +7,12 @@ import com.googlecode.lanterna.gui2.Label;
 
 import eu.selfhost.campus.ui.components.LCheckBox;
 import eu.selfhost.campus.ui.components.LComboBox;
-import eu.selfhost.campus.ui.components.LFileBox;
 import eu.selfhost.campus.ui.components.LTextBox;
 import eu.selfhost.campus.ui.container.WizardPage;
-import eu.selfhost.campus.ui.example.Example.Type;
+import eu.selfhost.campus.ui.example.Example2.Type;
 import eu.selfhost.campus.ui.util.Util;
 
-public class ExamplePage extends WizardPage {
+public class Example2Page extends WizardPage {
 
     final LTextBox intValue = new LTextBox();
 
@@ -21,11 +20,11 @@ public class ExamplePage extends WizardPage {
 
     final LTextBox textValue = new LTextBox();
 
-    final LFileBox file = new LFileBox();
+    final LTextBox file = new LTextBox();
 
     final LComboBox type = new LComboBox();
 
-    public ExamplePage(Example bean) {
+    public Example2Page(Example2 bean) {
         super(new GridLayout(2).setVerticalSpacing(1).setTopMarginSize(1).setBottomMarginSize(1),
                 bean);
 
@@ -64,7 +63,7 @@ public class ExamplePage extends WizardPage {
         addComponent(file);
         addField(file);
         file.setLayoutData(createTextBoxLayout());
-        file.bind(bean::getFile, bean::setFile);
+        file.bind(convertFile(bean::getFile), convertFile(bean::setFile));
 
         addComponent(new Label("Int Value"));
         intValue.setValidationPattern(Pattern.compile("[0-9]*"));
@@ -79,7 +78,7 @@ public class ExamplePage extends WizardPage {
     @Override
     public void refresh() {
         super.refresh();
-        boolean fl = ((Example) bean).isSomeOption();
+        boolean fl = ((Example2) bean).isSomeOption();
         type.setEnabled(!fl);
         textValue.setEnabled(!fl);
         intValue.setEnabled(!fl);

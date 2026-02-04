@@ -118,8 +118,8 @@ public class LComboBox extends ComboBox<String> implements IModifyable {
     }
 
     @Override
-    public void setGetter(Supplier<String> detter) {
-        this.getter = detter;
+    public void setGetter(Supplier<String> getter) {
+        this.getter = getter;
     }
 
     public void setListGetter(Supplier<String[]> listGetter) {
